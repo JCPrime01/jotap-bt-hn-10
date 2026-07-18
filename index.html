@@ -1,524 +1,212 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Odd 100 — COPA DO MUNDO</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;0,900;1,900&display=swap" rel="stylesheet">
+  <html lang="pt-br">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+      <title>Comunidade do Jota - Jogos do Dia</title>
 
-<!-- TikTok Pixel -->
-<script>
-!function (w, d, t) {
-  w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(
-var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script")
-;n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
-  ttq.load('D8TF8VRC77U2JEPM6MO0');
-  ttq.page();
-}(window, document, 'ttq');
-</script>
+      <style>
+          @import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,900;1,900&display=swap');
 
-<!-- Meta Pixel -->
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '1263049232641635');
-fbq('track', 'PageView');
-</script>
+          :root {
+              --primary: #00ff88;
+              --bg: #020202;
+          }
 
-<script>
-function abrirNavegador(url) {
-  var ua = navigator.userAgent;
-  var isAndroid = /Android/i.test(ua);
-  var isIOS = /iPhone|iPad|iPod/i.test(ua);
-  var isInApp = /Instagram|FBAN|FBAV/i.test(ua);
-  if (isInApp && isAndroid) {
-    window.location.href = 'intent://' + url.replace(/^https?:\/\//, '') + '#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=' + encodeURIComponent(url) + ';end';
-    return;
-  }
+          * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  window.location.href = url;
-}
+          body {
+              background-color: var(--bg);
+              color: #fff;
+              overflow-x: hidden;
+              min-height: 100vh;
+              font-family: 'Arial', sans-serif;
+          }
 
-function dispararLead(e) {
-  e.preventDefault();
-  var dest = e.currentTarget.href;
-  var eventId = 'tg_' + Date.now() + '_' + Math.random().toString(36).slice(2);
-  var fbp = document.cookie.match(/_fbp=([^;]+)/)?.[1] || null;
-  var fbc = document.cookie.match(/_fbc=([^;]+)/)?.[1] || null;
+          .bg-lines {
+              position: fixed;
+              inset: 0;
+              z-index: 0;
+              background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+              background-size: 10% 100%;
+              pointer-events: none;
+          }
 
-  fbq('track', 'CompleteRegistration', {}, { eventID: eventId });
-  if (typeof ttq !== 'undefined') ttq.track('SubmitForm');
+          .bg-lines::after {
+              content: "";
+              position: absolute;
+              top: -100%; left: 0; width: 100%; height: 100%;
+              background: linear-gradient(to bottom, transparent, rgba(0, 255, 136, 0.1), transparent);
+              animation: moveLines 6s linear infinite;
+          }
 
-  fetch('https://track-telegram-production.up.railway.app/api/lead', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ fbp: fbp, fbc: fbc, userAgent: navigator.userAgent, eventId: eventId, externalId: eventId }),
-    keepalive: true
-  }).catch(function(){});
+          @keyframes moveLines {
+              0% { transform: translateY(0%); }
+              100% { transform: translateY(200%); }
+          }
 
-  abrirNavegador(dest);
-}
-</script>
+          .lp-wrapper {
+              position: relative;
+              z-index: 10;
+              width: 100%;
+              min-height: 100vh;
+              display: flex;
+              flex-direction: column;
+              justify-content: space-between;
+              padding: 40px 0 0 0;
+              background:
+                  radial-gradient(circle at center, rgba(2, 2, 2, 0.4) 0%, var(--bg) 95%),
+                  url('https://raw.githubusercontent.com/JCPrime01/jp-api-hnc/main/jp-direto.jpg') center/cover no-repeat fixed;
+          }
 
-<style>
-*{ margin:0; padding:0; box-sizing:border-box; }
-html, body {
-  font-family: 'Montserrat', sans-serif;
-  color: #fff;
-  -webkit-tap-highlight-color: transparent;
-  min-height: 100%;
-  background: #000;
-  position: relative;
-}
-body::after {
-  content: '';
-  position: fixed; inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-  opacity: 0.035;
-  pointer-events: none;
-  z-index: -1;
-}
-.page {
-  max-width: 480px;
-  margin: 0 auto;
-  padding: 32px 20px 40px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  min-height: 100vh;
-}
-.badge {
-  background: linear-gradient(90deg, #c49a00, #f5c518, #c49a00);
-  border-radius: 999px;
-  padding: 6px 20px;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: #000;
-}
-.hero { text-align: center; line-height: 1; }
-.hero-odd {
-  display: flex;
-  align-items: baseline;
-  justify-content: center;
-  gap: 6px;
-}
-.hero-odd-word {
-  font-size: 52px;
-  font-weight: 900;
-  color: #fff;
-  text-shadow: 0 0 30px rgba(255,255,255,.2);
-  font-style: italic;
-}
-.hero-odd-num {
-  font-size: 90px;
-  font-weight: 900;
-  color: #f5c518;
-  text-shadow: 0 0 30px rgba(245,197,24,.6), 0 0 80px rgba(245,197,24,.3);
-  font-style: italic;
-  line-height: 1;
-}
-.subhead {
-  font-size: 18px;
-  font-weight: 800;
-  text-align: center;
-  line-height: 1.35;
-  letter-spacing: .5px;
-  text-transform: uppercase;
-}
-.subhead .hl-green { color: #4ade80; }
-.subhead .hl-gold  { color: #f5c518; }
+          .header-section { width: 100%; text-align: center; }
 
-.carousel-wrap { width: 100%; }
-.carousel-viewport { width: 100%; overflow: hidden; border-radius: 16px; }
-.carousel-track {
-  display: flex;
-  transition: transform 0.45s cubic-bezier(.4,0,.2,1);
-  will-change: transform;
-}
-.match-card {
-  min-width: 100%;
-  background: rgba(0,0,0,.55);
-  border: 1.5px solid rgba(74,222,128,.35);
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 0 30px rgba(74,222,128,.1), 0 0 60px rgba(74,222,128,.05), inset 0 0 40px rgba(0,0,0,.3);
-}
-.card-header {
-  background: rgba(255,255,255,.05);
-  border-bottom: 1px solid rgba(74,222,128,.2);
-  padding: 10px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 1px;
-}
-.teams-row {
-  padding: 18px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  border-bottom: 1px solid rgba(255,255,255,.07);
-}
-.team-side {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  flex: 1;
-}
-.team-logo {
-  width: 64px; height: 64px;
-  border-radius: 50%;
-  background: rgba(255,255,255,.06);
-  border: 1px solid rgba(255,255,255,.1);
-  display: flex; align-items: center; justify-content: center;
-  overflow: hidden;
-  font-size: 36px;
-}
-.team-logo img { width: 46px; height: 46px; object-fit: contain; }
-.team-name {
-  font-size: 12px;
-  font-weight: 800;
-  text-align: center;
-  letter-spacing: .5px;
-  text-transform: uppercase;
-  color: rgba(255,255,255,.85);
-}
-.vs-text {
-  font-size: 22px;
-  font-weight: 900;
-  color: rgba(255,255,255,.7);
-  letter-spacing: -1px;
-  flex-shrink: 0;
-}
-.comp-row {
-  padding: 10px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  border-bottom: 1px solid rgba(255,255,255,.07);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: rgba(255,255,255,.6);
-}
-.day-pill {
-  background: #16a34a;
-  border-radius: 6px;
-  padding: 3px 10px;
-  font-size: 11px;
-  font-weight: 800;
-  color: #fff;
-}
-.market-row {
-  padding: 12px 16px;
-  text-align: center;
-  border-bottom: 1px solid rgba(255,255,255,.07);
-}
-.market-label {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: #4ade80;
-  margin-bottom: 4px;
-}
-.market-name {
-  font-size: 15px;
-  font-weight: 800;
-  letter-spacing: .5px;
-  text-transform: uppercase;
-}
-.odds-row {
-  padding: 14px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-}
-.odd-from { display: flex; flex-direction: column; align-items: center; gap: 2px; }
-.odd-from-label { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; color: rgba(255,255,255,.4); text-transform: uppercase; }
-.odd-from-val { font-size: 28px; font-weight: 900; color: rgba(255,80,80,.7); position: relative; }
-.odd-from-val::after {
-  content: ''; position: absolute; top: 50%; left: -4px; right: -4px;
-  height: 2.5px; background: rgba(255,80,80,.8); transform: rotate(-8deg);
-}
-.odd-arrow { font-size: 28px; color: #4ade80; font-weight: 900; animation: arrow-pulse 1.2s ease-in-out infinite; }
-@keyframes arrow-pulse { 50% { transform: translateX(4px); opacity: .6; } }
-.odd-to { display: flex; flex-direction: column; align-items: center; gap: 2px; }
-.odd-to-label { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; color: rgba(255,255,255,.4); text-transform: uppercase; }
-.odd-to-val {
-  font-size: 46px; font-weight: 900; color: #f5c518;
-  text-shadow: 0 0 20px rgba(245,197,24,.5); line-height: 1;
-}
+          .section-label {
+              font-size: 12px;
+              text-transform: uppercase;
+              color: var(--primary);
+              letter-spacing: 4px;
+              margin-bottom: 15px;
+              font-weight: bold;
+          }
 
-.carousel-dots { display: flex; justify-content: center; gap: 8px; margin-top: 12px; }
-.dot {
-  width: 8px; height: 8px; border-radius: 50%;
-  background: rgba(255,255,255,.2); cursor: pointer;
-  transition: background .3s, transform .3s;
-}
-.dot.active { background: #f5c518; transform: scale(1.3); }
+          .carousel-container { display: flex; width: 100%; overflow: hidden; padding: 10px 0; }
+          .carousel-track { display: flex; gap: 20px; animation: scroll 25s linear infinite; padding-left: 20px; }
 
-.scarcity-box {
-  width: 100%;
-  background: rgba(245,197,24,.07);
-  border: 1px solid rgba(245,197,24,.2);
-  border-radius: 12px;
-  padding: 12px 16px;
-  text-align: center;
-}
-.scarcity-title { font-size: 13px; font-weight: 800; color: #f5c518; letter-spacing: .5px; margin-bottom: 4px; }
-.scarcity-sub { font-size: 12px; color: rgba(255,255,255,.55); font-weight: 600; }
+          @keyframes scroll {
+              0% { transform: translateX(0); }
+              100% { transform: translateX(-50%); }
+          }
 
-.cta-wrap { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 10px; }
-.cta {
-  width: 100%; border: none; border-radius: 14px; padding: 20px 24px;
-  font-family: 'Montserrat', sans-serif; font-size: 17px; font-weight: 900;
-  letter-spacing: 1.5px; text-transform: uppercase; color: #fff; cursor: pointer;
-  background: linear-gradient(135deg, #0088cc, #29b6f6);
-  box-shadow: 0 0 35px rgba(0,136,204,.5), 0 0 80px rgba(0,136,204,.2), 0 16px 32px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.2);
-  display: flex; align-items: center; justify-content: center; gap: 12px;
-  overflow: hidden; position: relative; transition: transform .2s, box-shadow .2s;
-  animation: cta-pulse 2.2s ease-in-out infinite; text-decoration: none;
-}
-@keyframes cta-pulse {
-  50% { box-shadow: 0 0 55px rgba(0,136,204,.7), 0 0 110px rgba(0,136,204,.3), 0 16px 32px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.2); }
-}
-.cta:hover { transform: translateY(-3px) scale(1.02); animation: none; }
-.cta::before {
-  content: ''; position: absolute; inset: 0;
-  background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,.18) 50%, transparent 70%);
-  transform: translateX(-120%) skewX(-15deg);
-  animation: shine 3s infinite 1s;
-}
-@keyframes shine { to { transform: translateX(220%) skewX(-15deg); } }
-.cta-icon { font-size: 22px; }
-.cta-text { line-height: 1; }
-.cta-arrow { font-size: 18px; opacity: .8; }
-.cta-trust { font-size: 11px; color: rgba(255,255,255,.3); font-weight: 500; }
-.cta-trust b { color: rgba(255,255,255,.5); }
+          .game-card {
+              background: rgba(255, 255, 255, 0.03);
+              backdrop-filter: blur(15px);
+              -webkit-backdrop-filter: blur(15px);
+              min-width: 260px;
+              padding: 20px;
+              border-radius: 24px;
+              border: 1px solid rgba(255, 255, 255, 0.1);
+              text-align: center;
+          }
 
-.disclaimer {
-  text-align: center; font-size: 10px; color: rgba(255,255,255,.2); line-height: 1.6; font-weight: 500;
-}
-.disclaimer strong { color: rgba(255,255,255,.35); }
+          .teams-row { display: flex; align-items: center; justify-content: space-around; gap: 10px; }
+          .team img { width: 45px; height: 45px; object-fit: contain; }
+          .vs { font-weight: 900; color: var(--primary); font-size: 18px; }
 
-@media (max-width: 430px) {
-  .page { padding: 16px 16px 20px; gap: 12px; }
-  .hero-odd-word { font-size: 38px; }
-  .hero-odd-num { font-size: 66px; }
-  .subhead { font-size: 15px; }
-  .teams-row { padding: 10px 12px; gap: 8px; }
-  .team-logo { width: 52px; height: 52px; }
-  .team-logo img { width: 38px; height: 38px; }
-  .team-name { font-size: 11px; }
-  .odd-to-val { font-size: 38px; }
-  .cta { font-size: 15px; padding: 15px 16px; }
-}
-</style>
-</head>
-<body>
-<main class="page">
+          .headline {
+              font-family: 'Kanit', sans-serif;
+              font-size: clamp(32px, 10vw, 48px);
+              font-weight: 900;
+              font-style: italic;
+              text-transform: uppercase;
+              margin: 40px 0;
+              line-height: 1.1;
+              padding: 0 20px;
+              text-shadow: 0 4px 15px rgba(0,0,0,0.8);
+          }
 
-  <div class="badge">ODD 100 &nbsp;·&nbsp; COPA DO MUNDO</div>
+          .footer-section { width: 100%; display: flex; flex-direction: column; align-items: center; padding: 0 20px; }
 
-  <div class="hero">
-    <div class="hero-odd">
-      <span class="hero-odd-word">ODD</span>
-      <span class="hero-odd-num">100</span>
-    </div>
-  </div>
+          .btn-container { width: 100%; max-width: 380px; margin-bottom: 15px; animation: pulse 2s infinite ease-in-out; }
 
-  <p class="subhead">
-    Odd 100 <span class="hl-green">exclusiva</span> nos jogos<br>
-    de <span class="hl-gold">Hoje</span>
-  </p>
+          @keyframes pulse {
+              0%, 100% { transform: scale(1); }
+              50% { transform: scale(1.03); }
+          }
 
-  <div class="carousel-wrap">
-    <div class="carousel-viewport">
-      <div class="carousel-track" id="track">
-        <!-- Jogo: Vitória vs Vasco da Gama -->
-        <div class="match-card">
-          <div class="card-header">🇧🇷 Brasileirão Série A</div>
-          <div class="teams-row">
-            <div class="team-side">
-              <div class="team-logo"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Esporte_Clube_Vit%C3%B3ria_logo.svg/250px-Esporte_Clube_Vit%C3%B3ria_logo.svg.png" style="width:46px;height:46px;object-fit:contain;"></div>
-              <div class="team-name">Vitória</div>
-            </div>
-            <div class="vs-text">VS</div>
-            <div class="team-side">
-              <div class="team-logo"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Vasco_da_Gama.svg/250px-Vasco_da_Gama.svg.png" style="width:46px;height:46px;object-fit:contain;"></div>
-              <div class="team-name">Vasco da Gama</div>
-            </div>
+          .btn-border-beam {
+              position: relative; padding: 2px; border-radius: 18px; overflow: hidden; display: block; text-decoration: none;
+              box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+          }
+
+          .btn-border-beam::before {
+              content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+              background: conic-gradient(transparent, transparent, var(--primary), transparent);
+              animation: rotate 3s linear infinite;
+          }
+
+          @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+          .btn-content {
+              position: relative; background: #0a0a0a; color: #fff; padding: 22px; border-radius: 16px;
+              font-size: 18px; font-weight: 900; text-transform: uppercase; display: flex; align-items: center; justify-content: center; z-index: 5; text-align: center;
+          }
+
+          .alert-box {
+              width: 100%;
+              max-width: 380px;
+              background: rgba(255, 255, 255, 0.05);
+              border: 1px solid rgba(255, 255, 255, 0.1);
+              border-radius: 12px;
+              padding: 15px;
+              margin-bottom: 5px;
+              backdrop-filter: blur(10px);
+          }
+
+          .alert-box p { font-size: 13px; color: #fff; line-height: 1.4; text-align: center; }
+          .alert-box span { color: #ff8800; font-weight: bold; }
+
+          .bateubet-footer {
+              width: 100%;
+              margin-top: 20px;
+              display: block;
+          }
+      </style>
+  </head>
+  <body>
+
+      <div class="bg-lines"></div>
+
+      <div class="lp-wrapper">
+
+          <div class="header-section">
+              <p class="section-label">Jogos do Dia</p>
+
+              <div class="carousel-container">
+                  <div class="carousel-track">
+                      <div class="game-card">
+                          <div class="teams-row">
+                              <div class="team"><img src="https://raw.githubusercontent.com/JCPrime01/jp-api-hnc/main/Mirassol-SP HD.png" alt=""><span>Athletico</span></div>
+                              <div class="vs">VS</div>
+                              <div class="team"><img src="https://crests.football-data.org/1770.png" alt=""><span>Botafogo</span></div>
+                          </div>
+                      </div>
+                      <div class="game-card">
+                          <div class="teams-row">
+                              <div class="team"><img src="https://raw.githubusercontent.com/JCPrime01/jp-api-hnc/main/Internacional.png" alt=""><span>Inter</span></div>
+                              <div class="vs">VS</div>
+                              <div class="team"><img src="https://crests.football-data.org/1776.png" alt=""><span>São Paulo</span></div>
+                          </div>
+                      </div>
+                      <div class="game-card">
+                          <div class="teams-row">
+                              <div class="team"><img src="https://raw.githubusercontent.com/JCPrime01/jp-api-hnc/main/Mirassol-SP HD.png" alt=""><span>Athletico</span></div>
+                              <div class="vs">VS</div>
+                              <div class="team"><img src="https://crests.football-data.org/1770.png" alt=""><span>Botafogo</span></div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+              <h1 class="headline">ANÁLISE<br><span style="color: var(--primary)">LIBERADA</span></h1>
           </div>
-          <div class="comp-row">Rodada 19 <span class="day-pill">19:30</span></div>
-          <div class="market-row">
-            <div class="market-label">Mercado</div>
-            <div class="market-name">🔒 Palpite exclusivo</div>
-          </div>
-          <div class="odds-row">
-            <div class="odd-from"><div class="odd-from-label">De</div><div class="odd-from-val">1.78</div></div>
-            <div class="odd-arrow">»</div>
-            <div class="odd-to"><div class="odd-to-label">Para</div><div class="odd-to-val">100</div></div>
-          </div>
-        </div>
 
-        <!-- Jogo: Botafogo vs Santos -->
-        <div class="match-card">
-          <div class="card-header">🇧🇷 Brasileirão Série A</div>
-          <div class="teams-row">
-            <div class="team-side">
-              <div class="team-logo"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Botafogo_de_Futebol_e_Regatas_logo.svg/250px-Botafogo_de_Futebol_e_Regatas_logo.svg.png" style="width:46px;height:46px;object-fit:contain;"></div>
-              <div class="team-name">Botafogo</div>
-            </div>
-            <div class="vs-text">VS</div>
-            <div class="team-side">
-              <div class="team-logo"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Santos_Logo.svg/250px-Santos_Logo.svg.png" style="width:46px;height:46px;object-fit:contain;"></div>
-              <div class="team-name">Santos</div>
-            </div>
-          </div>
-          <div class="comp-row">Rodada 19 <span class="day-pill">19:30</span></div>
-          <div class="market-row">
-            <div class="market-label">Mercado</div>
-            <div class="market-name">🔒 Palpite exclusivo</div>
-          </div>
-          <div class="odds-row">
-            <div class="odd-from"><div class="odd-from-label">De</div><div class="odd-from-val">1.78</div></div>
-            <div class="odd-arrow">»</div>
-            <div class="odd-to"><div class="odd-to-label">Para</div><div class="odd-to-val">100</div></div>
-          </div>
-        </div>
+          <div class="footer-section">
+              <div class="alert-box">
+                  <p>Grupo gratuito no telegram</p>
+              </div>
 
-        <!-- Jogo: Ferencvarosi TC vs FK Vojvodina -->
-        <div class="match-card">
-          <div class="card-header">🏆 UEFA Liga Europa</div>
-          <div class="teams-row">
-            <div class="team-side">
-              <div class="team-logo"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Ferencv%C3%A1rosi_TC_%28crest%29.svg/250px-Ferencv%C3%A1rosi_TC_%28crest%29.svg.png" style="width:46px;height:46px;object-fit:contain;"></div>
-              <div class="team-name">Ferencvarosi TC</div>
-            </div>
-            <div class="vs-text">VS</div>
-            <div class="team-side">
-              <div class="team-logo"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/7/7e/FK_Vojvodina.svg/250px-FK_Vojvodina.svg.png" style="width:46px;height:46px;object-fit:contain;"></div>
-              <div class="team-name">FK Vojvodina</div>
-            </div>
-          </div>
-          <div class="comp-row">Rodada 2 - volta <span class="day-pill">15:15</span></div>
-          <div class="market-row">
-            <div class="market-label">Mercado</div>
-            <div class="market-name">🔒 Palpite exclusivo</div>
-          </div>
-          <div class="odds-row">
-            <div class="odd-from"><div class="odd-from-label">De</div><div class="odd-from-val">1.78</div></div>
-            <div class="odd-arrow">»</div>
-            <div class="odd-to"><div class="odd-to-label">Para</div><div class="odd-to-val">100</div></div>
-          </div>
-        </div>
+              <div class="btn-container">
+                  <a href="https://track.grupojc.cc/track/b215d5e4-a406-450d-bc5f-f9687470105e/redirect?utm_source=bateupe&utm_medium=10" class="btn-border-beam">
+                      <span class="btn-content"><svg width="22" height="22" viewBox="0 0 24 24" fill="white" style="vertical-align:middle;margin-right:8px"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L8.32 13.617l-2.96-.924c-.64-.204-.657-.64.136-.954l11.566-4.462c.537-.194 1.006.131.832.944z"/></svg> ENTRAR NO GRUPO</span>
+                  </a>
+              </div>
 
-        <!-- Jogo: IF Vestri vs Qarabag FK -->
-        <div class="match-card">
-          <div class="card-header">🏆 UEFA Liga Europa</div>
-          <div class="teams-row">
-            <div class="team-side">
-              <div class="team-logo"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/IF_Vestri.png/250px-IF_Vestri.png" style="width:46px;height:46px;object-fit:contain;"></div>
-              <div class="team-name">IF Vestri</div>
-            </div>
-            <div class="vs-text">VS</div>
-            <div class="team-side">
-              <div class="team-logo"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Qarabag_FK.svg/250px-Qarabag_FK.svg.png" style="width:46px;height:46px;object-fit:contain;"></div>
-              <div class="team-name">Qarabag FK</div>
-            </div>
+              <img src="https://raw.githubusercontent.com/JCPrime01/jp-api-hnc/main/BATEUBET.png" class="bateubet-footer" alt="">
+
           </div>
-          <div class="comp-row">Rodada 2 - volta <span class="day-pill">17:00</span></div>
-          <div class="market-row">
-            <div class="market-label">Mercado</div>
-            <div class="market-name">🔒 Palpite exclusivo</div>
-          </div>
-          <div class="odds-row">
-            <div class="odd-from"><div class="odd-from-label">De</div><div class="odd-from-val">1.78</div></div>
-            <div class="odd-arrow">»</div>
-            <div class="odd-to"><div class="odd-to-label">Para</div><div class="odd-to-val">100</div></div>
-          </div>
-        </div>
 
       </div>
-    </div>
-    <div class="carousel-dots" id="dots"></div>
-  </div>
 
-  <div class="scarcity-box">
-    <div class="scarcity-title">⏰ OFERTA POR TEMPO LIMITADO!</div>
-    <div class="scarcity-sub">Garanta agora sua Odd 100 antes que esgote.</div>
-  </div>
-
-  <div class="cta-wrap">
-    <a href="https://track.grupojc.cc/track/b215d5e4-a406-450d-bc5f-f9687470105e/redirect?utm_source=bateupe&utm_medium=10" class="cta" onclick="dispararLead(event)">
-      <span class="cta-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8l-1.68 7.92c-.12.56-.46.7-.92.43l-2.56-1.88-1.24 1.19c-.14.14-.26.26-.52.26l.18-2.62 4.74-4.28c.2-.18-.04-.28-.32-.1L7.38 14.4l-2.52-.79c-.54-.17-.55-.54.12-.8l9.84-3.8c.46-.16.86.11.82.79z"/></svg></span>
-      <span class="cta-text">RECEBER NO TELEGRAM</span>
-      <span class="cta-arrow">›</span>
-    </a>
-    <p class="cta-trust">Acesso gratuito &nbsp;·&nbsp; <b>Direto no Telegram</b></p>
-  </div>
-
-  <div class="disclaimer">
-    <strong>+18 · Jogue com responsabilidade.</strong><br>
-    Apostas envolvem risco de perda. Jogar pode causar dependência.
-  </div>
-
-</main>
-
-<script>
-const track = document.getElementById('track');
-const dotsEl = document.getElementById('dots');
-const total = track.children.length;
-let current = 0;
-let autoTimer;
-
-for (let i = 0; i < total; i++) {
-  const d = document.createElement('div');
-  d.className = 'dot' + (i === 0 ? ' active' : '');
-  d.addEventListener('click', () => goTo(i));
-  dotsEl.appendChild(d);
-}
-
-function goTo(idx) {
-  current = (idx + total) % total;
-  track.style.transform = `translateX(-${current * 100}%)`;
-  document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === current));
-  resetAuto();
-}
-
-function next() { goTo(current + 1); }
-
-function resetAuto() {
-  clearInterval(autoTimer);
-  autoTimer = setInterval(next, 3500);
-}
-
-resetAuto();
-
-let startX = 0;
-track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
-track.addEventListener('touchend', e => {
-  const diff = startX - e.changedTouches[0].clientX;
-  if (Math.abs(diff) > 40) diff > 0 ? next() : goTo(current - 1);
-});
-</script>
-</body>
-</html>
+  </body>
+  </html>
